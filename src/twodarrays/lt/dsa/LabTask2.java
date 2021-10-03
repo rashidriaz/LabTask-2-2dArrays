@@ -22,7 +22,7 @@ public class LabTask2 {
         System.out.println("\n----------------------------------------------------------------------\n");
         evaluateAndPrintSumsOfValuesInEachRow();
         System.out.println("\n----------------------------------------------------------------------\n");
-        evaluateAndPrintGreaterValueFromEveryRowAndColumn();
+        evaluateAndPrintGreaterAndSmallestValueFromEveryRowAndColumn();
     }
 
     private static void initializeTheArray() {
@@ -68,11 +68,34 @@ public class LabTask2 {
         System.out.println("Sum of values in Row: " + values.row + " is: " + values.sum);
     }
 
-    private static void evaluateAndPrintGreaterValueFromEveryRowAndColumn() {
-        int[] greaterValuesFromRows = new int[integerArray.length];
-        int[] greaterValuesFromColumns = new int[integerArray[0].length];
+    private static void evaluateAndPrintGreaterAndSmallestValueFromEveryRowAndColumn() {
+        int[] forRows = new int[integerArray.length];
+        int[] forColumns = new int[integerArray[0].length];
+        evaluateAndPrintGreaterValueFromEachRowAndColumn(forRows, forColumns);
+        System.out.println("\n----------------------------------------------------------------------\n");
+        evaluateAndPrintSmallestValueFromEachRowAndColumn(forRows, forColumns);
+    }
+
+    private static void evaluateAndPrintGreaterValueFromEachRowAndColumn(int[] greaterValuesFromRows, int[] greaterValuesFromColumns) {
         evaluateGreaterValueFromEveryRowAndColumn(greaterValuesFromRows, greaterValuesFromColumns);
-        printGreaterValueFromEveryRowAndColumn(greaterValuesFromRows, greaterValuesFromColumns);
+        printStatisticForEveryRowAndColumn(greaterValuesFromRows, greaterValuesFromColumns, "Largest Value");
+    }
+
+    private static void evaluateAndPrintSmallestValueFromEachRowAndColumn(int[] smallestValuesFromRows,
+                                                                          int[] smallestValuesFromColumns) {
+        evaluateSmallestValueFromEachRowAndColumn(smallestValuesFromRows, smallestValuesFromColumns);
+        printStatisticForEveryRowAndColumn(smallestValuesFromRows, smallestValuesFromColumns, "Smallest Values");
+    }
+
+    private static void evaluateSmallestValueFromEachRowAndColumn(int[] rowValues, int[] columnValues) {
+        traverse2DArray(dimensions -> {
+            if (rowValues[dimensions.getRows()] > integerArray[dimensions.getRows()][dimensions.getColumns()]) {
+                rowValues[dimensions.getRows()] = integerArray[dimensions.getRows()][dimensions.getColumns()];
+            }
+            if (columnValues[dimensions.getColumns()] > integerArray[dimensions.getRows()][dimensions.getColumns()]) {
+                columnValues[dimensions.getColumns()] = integerArray[dimensions.getRows()][dimensions.getColumns()];
+            }
+        });
     }
 
     private static void evaluateGreaterValueFromEveryRowAndColumn(int[] rowValues, int[] columnValues) {
@@ -86,13 +109,13 @@ public class LabTask2 {
         });
     }
 
-    private static void printGreaterValueFromEveryRowAndColumn(int[] rowValue, int[] columnValue) {
+    private static void printStatisticForEveryRowAndColumn(int[] rowValue, int[] columnValue, String statisticType) {
         traverse1DArray(integer ->
-                        System.out.println("Largest Value from row " + integer + " is: " + rowValue[integer]),
+                        System.out.println(statisticType + " from row " + integer + " is: " + rowValue[integer]),
                 rowValue.length);
         System.out.println("\n----------------------------------------------------------------------\n");
         traverse1DArray(integer ->
-                        System.out.println("Largest Value from column " + integer + " is: " + columnValue[integer]),
+                        System.out.println(statisticType + " from column " + integer + " is: " + columnValue[integer]),
                 columnValue.length);
     }
 
