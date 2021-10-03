@@ -31,7 +31,7 @@ public class LabTask2 {
     }
 
     private static void insertIntoIntegerArray() {
-        travers2DArray(dimensions -> {
+        traverse2DArray(dimensions -> {
             Random random = new Random();
             integerArray[dimensions.getRows()][dimensions.getColumns()] = random.nextInt(100);
         });
@@ -42,7 +42,7 @@ public class LabTask2 {
         var prevRow = new Object() {
             int value = 0;
         };
-        travers2DArray(dimensions -> {
+        traverse2DArray(dimensions -> {
             if (prevRow.value != dimensions.getRows()) {
                 System.out.println();
                 prevRow.value = dimensions.getRows();
@@ -57,7 +57,7 @@ public class LabTask2 {
             int row = 0;
             int sum = 0;
         };
-        travers2DArray(dimensions -> {
+        traverse2DArray(dimensions -> {
             if (values.row != dimensions.getRows()) {
                 System.out.println("Sum of values in Row: " + values.row + " is: " + values.sum);
                 values.sum = 0;
@@ -76,7 +76,7 @@ public class LabTask2 {
     }
 
     private static void evaluateGreaterValueFromEveryRowAndColumn(int[] rowValues, int[] columnValues) {
-        travers2DArray(dimensions -> {
+        traverse2DArray(dimensions -> {
             if (rowValues[dimensions.getRows()] < integerArray[dimensions.getRows()][dimensions.getColumns()]) {
                 rowValues[dimensions.getRows()] = integerArray[dimensions.getRows()][dimensions.getColumns()];
             }
@@ -96,7 +96,7 @@ public class LabTask2 {
                 columnValue.length);
     }
 
-    private static void travers2DArray(Consumer<Dimensions> function) {
+    private static void traverse2DArray(Consumer<Dimensions> function) {
         for (int row = 0; row < integerArray.length; row++) {
             for (int column = 0; column < integerArray[row].length; column++) {
                 function.accept(new Dimensions(row, column));
